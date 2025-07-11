@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { WeatherData } from '~/types/weather'
 import dayjs from 'dayjs'
+import { VueDataUi, type VueUiXyConfig, type VueUiXyDatasetItem } from 'vue-data-ui'
 import { azimuthToDirection, hpaToMmhg } from '~/utils'
 
 defineOptions({
@@ -38,6 +39,25 @@ const tableData = computed(() => weatherFetch.data.value && weatherFetch.data.va
     cloud_area_fraction: `${timeseriesDataPoint.data.instant.details.cloud_area_fraction}`,
   }
 )))
+
+const plotDataset = computed<VueUiXyDatasetItem[]>(() => weatherFetch.data.value
+  ? [
+      {
+        name: 'Температура',
+        series: weatherFetch.data.value.properties.timeseries.map(timeseriesDataPoint => timeseriesDataPoint.data.instant.details.air_temperature),
+        type: 'line',
+        color: 'red',
+      },
+      {
+        name: 'Давление',
+        series: weatherFetch.data.value.properties.timeseries.map(timeseriesDataPoint => hpaToMmhg(timeseriesDataPoint.data.instant.details.air_pressure_at_sea_level)),
+        type: 'line',
+        color: 'red',
+        scaleSteps: 50,
+      },
+    ]
+  : [])
+const plotConfig = ref<VueUiXyConfig>({})
 </script>
 
 <template>
@@ -83,18 +103,24 @@ const tableData = computed(() => weatherFetch.data.value && weatherFetch.data.va
       Ошибка! {{ weatherFetch.error.value }}
     </template>
     <template v-else-if="weatherFetch.isFinished && weatherFetch.data.value && tableData">
+      <div class="max-w-3xl">
+        <VueDataUi v-if="plotDataset.length > 0 && plotConfig" component="VueUiXy" :dataset="plotDataset" :config="plotConfig" />
+      </div>
+
+      <el-divider />
+
       <el-table :data="tableData" style="width: 100%">
         <el-table-column fixed width="160" prop="time" label="Время" />
         <el-table-column width="160" prop="temp" label="Температура (°C)" />
         <el-table-column width="160" prop="pressure" label="Давление (mmHg)" />
         <el-table-column width="160" prop="wind" label="Ветер (m/s)" />
-        <el-table-column width="280" prop="wind_dir" label="Направление ветра">
+        <el-table-column width="280" prop="wind_dir" label="Ветер со стороны">
           <template #default="scope">
             <span
               class="flex gap-2 items-center"
             ><span
               class="i-carbon:arrow-up text-lg inline-block" :style="{
-                transform: `rotate(${scope.row.wind_dir}deg)`,
+                transform: `rotate(${Number(scope.row.wind_dir) + 180}deg)`,
               }"
             />{{ azimuthToDirection(scope.row.wind_dir) }} ({{ scope.row.wind_dir }})</span>
           </template>

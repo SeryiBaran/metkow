@@ -17,6 +17,7 @@
     "dayjs": "catalog:frontend",
     "element-plus": "catalog:frontend",
     "vue": "catalog:frontend",
+    "vue-data-ui": "catalog:frontend",
     "vue-router": "catalog:frontend"
   },
   "devDependencies": {

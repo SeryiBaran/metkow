@@ -5,7 +5,7 @@ export function hpaToMmhg(hpa: number): number {
 // thx deepCOOOOOOOOOOOOOOOOOOCK
 export function azimuthToDirection(azimuth: number) {
   // Нормализация угла в диапазон [0, 360)
-  const normalized = ((azimuth % 360) + 360) % 360
+  const normalized = (((azimuth) % 360) + 360) % 360
 
   // Массив направлений (16 румбов)
   const directions = [

@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { routes } from 'vue-router/auto-routes'
 import App from './App.vue'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+import 'vue-data-ui/style.css' // Include the css
 
 import './styles/main.css'
 import 'uno.css'
