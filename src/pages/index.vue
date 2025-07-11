@@ -17,7 +17,7 @@ const form = useLocalStorage<Form>('metkow__form', {
   lon: '-0.118092',
 })
 
-const url = computed(() => `https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${form.value.lat}&lon=${form.value.lon}`)
+const url = computed(() => `https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${form.value.lat.trim()}&lon=${form.value.lon.trim()}`)
 
 const weatherFetch = useFetch(url, {
   immediate: false,
