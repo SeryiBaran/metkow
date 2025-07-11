@@ -83,12 +83,12 @@ const tableData = computed(() => weatherFetch.data.value && weatherFetch.data.va
       Ошибка! {{ weatherFetch.error.value }}
     </template>
     <template v-else-if="weatherFetch.isFinished && weatherFetch.data.value && tableData">
-      <el-table :data="tableData">
-        <el-table-column prop="time" label="Время" />
-        <el-table-column prop="temp" label="Температура (°C)" />
-        <el-table-column prop="pressure" label="Давление (mmHg)" />
-        <el-table-column prop="wind" label="Ветер (m/s)" />
-        <el-table-column prop="wind_dir" label="Направление ветра">
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column fixed width="160" prop="time" label="Время" />
+        <el-table-column width="160" prop="temp" label="Температура (°C)" />
+        <el-table-column width="160" prop="pressure" label="Давление (mmHg)" />
+        <el-table-column width="160" prop="wind" label="Ветер (m/s)" />
+        <el-table-column width="280" prop="wind_dir" label="Направление ветра">
           <template #default="scope">
             <span
               class="flex gap-2 items-center"
@@ -99,8 +99,8 @@ const tableData = computed(() => weatherFetch.data.value && weatherFetch.data.va
             />{{ azimuthToDirection(scope.row.wind_dir) }} ({{ scope.row.wind_dir }})</span>
           </template>
         </el-table-column>
-        <el-table-column prop="relative_humidity" label="Отн. Влажность (%)" />
-        <el-table-column prop="cloud_area_fraction" label="cloud_area_fraction (%)" />
+        <el-table-column width="160" prop="relative_humidity" label="Отн. Влажность (%)" />
+        <el-table-column width="160" prop="cloud_area_fraction" label="cloud_area_frac (%)" />
       </el-table>
     </template>
   </div>
