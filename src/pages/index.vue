@@ -55,7 +55,7 @@ const tableData = computed(() => weatherFetch.data.value && weatherFetch.data.va
       <em text-sm op75>- Based on Vitesse lite - Opinionated Vite Starter Template</em>
     </p>
     <p>
-      <em text-sm op75>Получите ваши корды (например в яндекс картах), запните в поля ниже и ударьте виртуальной рукой по кнопе.</em>
+      <em text-sm op75>Получите ваши корды (например в яндекс картах), вбейте в поля ниже и тыкните по кнопе.</em>
     </p>
 
     <div py-4 />
