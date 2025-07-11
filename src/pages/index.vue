@@ -83,7 +83,22 @@ const tableData = computed(() => weatherFetch.data.value && weatherFetch.data.va
       Ошибка! {{ weatherFetch.error.value }}
     </template>
     <template v-else-if="weatherFetch.isFinished && weatherFetch.data.value && tableData">
-      <el-divider />
+      <!-- <div class="flex flex-col gap-4">
+        <div v-for="timeseriesDataPoint in tableData" :key="timeseriesDataPoint.time" class="text-sm font-300 p-4 rounded-3 bg-slate-600/50 max-w-45">
+          <p class="text-lg font-300">
+            {{ timeseriesDataPoint.time }}
+          </p>
+          <p class="opacity-70">
+            <span class="flex flex gap-2">
+              <span>{{ timeseriesDataPoint.temp }} °C</span>
+              <span>{{ timeseriesDataPoint.wind }} m/s</span>
+            </span>
+            <span>{{ timeseriesDataPoint.pressure }} mmHg</span>
+          </p>
+        </div>
+      </div>
+
+      <el-divider /> -->
 
       <el-table :data="tableData" style="width: 100%">
         <el-table-column fixed width="160" prop="time" label="Время" />
