@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { WeatherData } from '~/types/weather'
 import dayjs from 'dayjs'
-import { VueDataUi, type VueUiXyConfig, type VueUiXyDatasetItem } from 'vue-data-ui'
 import { azimuthToDirection, hpaToMmhg } from '~/utils'
 
 defineOptions({
@@ -39,25 +38,6 @@ const tableData = computed(() => weatherFetch.data.value && weatherFetch.data.va
     cloud_area_fraction: `${timeseriesDataPoint.data.instant.details.cloud_area_fraction}`,
   }
 )))
-
-const plotDataset = computed<VueUiXyDatasetItem[]>(() => weatherFetch.data.value
-  ? [
-      {
-        name: 'Температура',
-        series: weatherFetch.data.value.properties.timeseries.map(timeseriesDataPoint => timeseriesDataPoint.data.instant.details.air_temperature),
-        type: 'line',
-        color: 'red',
-      },
-      {
-        name: 'Давление',
-        series: weatherFetch.data.value.properties.timeseries.map(timeseriesDataPoint => hpaToMmhg(timeseriesDataPoint.data.instant.details.air_pressure_at_sea_level)),
-        type: 'line',
-        color: 'red',
-        scaleSteps: 50,
-      },
-    ]
-  : [])
-const plotConfig = ref<VueUiXyConfig>({})
 </script>
 
 <template>
@@ -103,10 +83,6 @@ const plotConfig = ref<VueUiXyConfig>({})
       Ошибка! {{ weatherFetch.error.value }}
     </template>
     <template v-else-if="weatherFetch.isFinished && weatherFetch.data.value && tableData">
-      <div class="max-w-3xl">
-        <VueDataUi v-if="plotDataset.length > 0 && plotConfig" component="VueUiXy" :dataset="plotDataset" :config="plotConfig" />
-      </div>
-
       <el-divider />
 
       <el-table :data="tableData" style="width: 100%">
