@@ -34,6 +34,7 @@ const tableData = computed(() => weatherFetch.data.value && weatherFetch.data.va
     pressure: `${hpaToMmhg(timeseriesDataPoint.data.instant.details.air_pressure_at_sea_level).toFixed(1)}`,
     wind: `${timeseriesDataPoint.data.instant.details.wind_speed.toFixed(1)}`,
     wind_dir: `${timeseriesDataPoint.data.instant.details.wind_from_direction}`,
+    relative_humidity: `${timeseriesDataPoint.data.instant.details.relative_humidity.toFixed(1)}`,
     cloud_area_fraction: `${timeseriesDataPoint.data.instant.details.cloud_area_fraction}`,
   }
 )))
@@ -98,6 +99,7 @@ const tableData = computed(() => weatherFetch.data.value && weatherFetch.data.va
             />{{ azimuthToDirection(scope.row.wind_dir) }} ({{ scope.row.wind_dir }})</span>
           </template>
         </el-table-column>
+        <el-table-column prop="relative_humidity" label="Отн. Влажность (%)" />
         <el-table-column prop="cloud_area_fraction" label="cloud_area_fraction (%)" />
       </el-table>
     </template>
